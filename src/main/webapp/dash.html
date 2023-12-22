@@ -1,0 +1,104 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Ticket Booking Dashboard</title>
+    
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: rgb(61, 233, 78);
+            color: #fff;
+            text-align: center;
+            padding: 1em;
+        }
+
+        nav {
+            background-color: #444;
+            color: #fff;
+            padding: 0.5em;
+        }
+
+        nav ul {
+			
+            list-style:none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            display: inline;
+            margin-right: 20px;
+            color: white;
+           
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        section {
+            margin-bottom: 30px;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1em;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .dashboard-image {
+            max-width: 30%; /* Ensure the image does not exceed its container's width */
+            height: auto;
+            display: flex; /* Remove extra space below the image */
+            margin: 20px auto; /* Center the image with some margin */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Welcome to the Event Ticket Booking Dashboard</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="dashboard.jsp">Home</a></li>
+            <li><a href="browseEvents.jsp">Browse Events</a></li>
+            <li><a href="myBookings.jsp">My Bookings</a></li>
+            <li><a href="logout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section>
+            <h2>Hello, ${sessionScope.userId}!</h2>
+            <p>Explore and book upcoming events.</p>
+            <img class="dashboard-image" src="Image/event1.jpg" alt="Event Image 1">
+            <!-- Replace the above src attribute with the actual path to your image -->
+        </section>
+
+        <!-- You can add more styled sections with images based on your application's features -->
+
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Your Event Ticket Booking App</p>
+    </footer>
+
+</body>
+</html>
