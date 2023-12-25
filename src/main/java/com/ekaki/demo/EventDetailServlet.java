@@ -90,6 +90,8 @@ public class EventDetailServlet extends HttpServlet {
 
                     event.setVenue_id(resultSet.getInt("venue_id"));
                     event.setDescription(resultSet.getString("description"));
+                    event.setVenue(resultSet.getString("venue"));
+                    event.setImagepath(resultSet.getString("imagepath"));
                     return event;
                 }
             }

@@ -1,17 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ page import="com.ekaki.demo.Event" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Browse Events</title>
-    
-    <!-- Link the external CSS file -->
+    <title>Event Details</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
 
-    <header>
+       <header>
         <h1>Welcome to the Event Ticket Booking - Browse Events</h1>
     </header>
 
@@ -24,30 +22,29 @@
         </ul>
     </nav>
 
+
     <main>
         <section>
-            <div class="event-card">
-                <img src="images/event1.jpg" alt="Event Image 1">
-                <div class="event-details">
-                    <h2 class="event-title">Event Title 1</h2>
-                    <p class="event-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget tristique odio.</p>
-                    <p class="event-details">Date: DD/MM/YYYY</p>
-                    <p class="event-details">Time: HH:MM AM/PM</p>
-                    <p class="event-details">Venue: Event Venue</p>
-                    <p class="event-details">Available Seats: X</p>
-                    <p class="event-details">Ticket Price: $YYY.YY</p>
-                    <a href="BookingServlet?eventId=1" class="book-now-button">Book Now</a>
+            <c:if test="${not empty eventDetails}">
+                <div class="event-details-container">
+                    <h2 class="event-title">${eventDetails.event_name}</h2>
+                    <p class="event-details">Date: ${eventDetails.event_date}</p>
+                    <p class="event-details">Time: ${eventDetails.event_time}</p>
+                    <p class="event-details">Venue: ${eventDetails.event_venue}</p>
+                    <p class="event-details">Description: ${eventDetails.description}</p>
+                    
+
+                    <!-- You can add a link to book the event using the event ID -->
+                    <a href="BookingServlet?eventId=${eventDetails.event_id}" class="book-now-button">Book Now</a>
                 </div>
-            </div>
-
-            <!-- Add more event cards as needed -->
-
+            </c:if>
+            <c:if test="${empty eventDetails}">
+                <p>Event details not found.</p>
+            </c:if>
         </section>
     </main>
 
-    <footer>
-        <p>&copy; 2023 Your Event Ticket Booking App</p>
-    </footer>
+    <!-- Footer -->
 
 </body>
 </html>

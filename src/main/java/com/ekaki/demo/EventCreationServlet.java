@@ -45,17 +45,20 @@ public class EventCreationServlet extends HttpServlet {
 	        String eventTime = request.getParameter("eventTime");
 	        String venueId = request.getParameter("venueId");
 	        String description = request.getParameter("description");
+	        String venue = request.getParameter("venue");
+	        String imagepath = request.getParameter("imagepath");
+	        
 
 	        // Validate input data
 	        if (eventName == null || eventDate == null || eventTime == null || venueId == null
-	                || eventName.isEmpty() || eventDate.isEmpty() || eventTime.isEmpty() || venueId.isEmpty()) {
+	                || eventName.isEmpty() || eventDate.isEmpty() || eventTime.isEmpty() || venueId.isEmpty()|| venue.isEmpty()) {
 	            // Handle validation error
 	            response.sendRedirect("createEvent.jsp?error=validation");
 	            return;
 	        }
 
 	        // Store event information in the database (events table)
-	        boolean creationSuccess = createEvent(eventName, eventDate, eventTime, venueId, description);
+	        boolean creationSuccess = createEvent(eventName, eventDate, eventTime, venueId, description,venue,imagepath);
 
 	        if (creationSuccess) {
 	            // Redirect to the event details page
@@ -66,18 +69,20 @@ public class EventCreationServlet extends HttpServlet {
 	        }
 	}
 	
-	private boolean createEvent(String eventName, String eventDate, String eventTime, String venueId, String description) {
+	private boolean createEvent(String eventName, String eventDate, String eventTime, String venueId, String description,String venue,String imagepath) {
         
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/projectevent", "root",
                 "Akshay@15");
                 PreparedStatement statement = connection.prepareStatement(
-                        "INSERT INTO events (event_name, event_date, event_time, venue_id, description) VALUES (?, ?, ?, ?, ?)")) {
+                        "INSERT INTO events (event_name, event_date, event_time, venue_id, description,imagepath,venue) VALUES (?, ?, ?, ?, ?,?,?)")) {
 
             statement.setString(1, eventName);
             statement.setString(2, eventDate);
             statement.setString(3, eventTime);
             statement.setString(4, venueId);
             statement.setString(5, description);
+            statement.setString(6, venue);
+            statement.setString(7, imagepath);
 
             int rowsInserted = statement.executeUpdate();
 

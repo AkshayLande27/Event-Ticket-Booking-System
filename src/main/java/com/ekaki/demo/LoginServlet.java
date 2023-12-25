@@ -56,19 +56,29 @@ public class LoginServlet extends HttpServlet {
 	       
 	        if (isValidUser(username, password)) {
 	            // Set session attributes for authenticated user
-	        	
 	            HttpSession session = request.getSession(true);
-	            session.setAttribute("username", username); 
-	            session.setAttribute("userId",getUserId(username,password));
+	            session.setAttribute("username", username);
+	            int userId = getUserId(username, password);
+	            session.setAttribute("userId", userId);
 
-	           
-	            response.sendRedirect("dashboard.jsp");
+	            // Check if the user is an admin
+	            boolean isAdmin = checkIfAdmin(userId);
+	            session.setAttribute("isAdmin", isAdmin);
+
+	            // Redirect based on user type
+	            if (isAdmin) {
+	                response.sendRedirect("adminDashboard.jsp");
+	            } else {
+	                response.sendRedirect("dashboard.jsp");
+	            }
 	        } else {
 	            // Handle login failure
 	            response.sendRedirect("Login.jsp?error=invalid");
 	        }
+	    }
+
 	    
-	}
+	
 	
 	private boolean isValidUser(String username, String password) {
 		try {
@@ -124,5 +134,31 @@ public class LoginServlet extends HttpServlet {
 	            return -1;
 	        }
 	}
+	
+	 private boolean checkIfAdmin(int userId) {
+	        try {
+	            Class.forName("com.mysql.cj.jdbc.Driver");
+	        } catch (ClassNotFoundException e) {
+	            e.printStackTrace();
+	        }
+	        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/projectevent", "root",
+	                "Akshay@15");
+	                PreparedStatement statement = connection
+	                        .prepareStatement("SELECT is_admin FROM users WHERE user_Id = ?")) {
+
+	            statement.setInt(1, userId);
+
+	            try (ResultSet resultSet = statement.executeQuery()) {
+	                if (resultSet.next()) {
+	                    return resultSet.getBoolean("is_admin");
+	                } else {
+	                    return false;
+	                }
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            return false;
+	        }
+	    }
 
 }

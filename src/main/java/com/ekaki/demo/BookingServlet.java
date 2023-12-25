@@ -58,10 +58,9 @@ public class BookingServlet extends HttpServlet {
 	    boolean bookingSuccess = bookEvent(eventId, numberOfTickets, request);
 
 	    if (bookingSuccess) {
-	        // Set booking status and update seat availability
-	        // (You should have a method to update the status and availability in the database)
-
-	        // Redirect to the booking confirmation page or user dashboard
+	    	
+	    	
+	       
 	        response.sendRedirect("bookingConfirmation.jsp?totalPrice=" + totalPrice);
 	    } else {
 	        // Handle booking failure
@@ -142,7 +141,7 @@ public class BookingServlet extends HttpServlet {
 	                    double totalPrice = calculateTotalPrice(eventId, numberOfTickets);
 	                    insertStatement.setDouble(4, totalPrice);
 
-	                    // Set is_paid to 0 initially (assuming not paid at the time of booking)
+	                    
 	                    insertStatement.setInt(5, 0);
 
 	                    int rowsInserted = insertStatement.executeUpdate();
